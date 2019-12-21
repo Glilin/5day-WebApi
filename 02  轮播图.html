@@ -133,19 +133,44 @@
         </div>
     </div>
     <script>
+        debugger;
         //    1 获取元素
         var lists = document.querySelectorAll(".list i");
+        var arrowLeft = document.querySelector(".arrow .arrow-left");
+
+        // 自定义变量存放索引值
+        var keyIndex = 0;
+        // 需求1： 能切换圆点  和  能切换图片
         // 2 注册事件  循环遍历数组，给每个元素注册事件
         lists.forEach(function(item, index) {
-            item.addEventListener("mousemove", function() {
-                // 按钮切换用排他思想：循环遍历排除所有，后确认自己
-                lists.forEach(function(item, index) {
+                item.addEventListener("mousemove", function() {
+                    // 按钮切换用排他思想：循环遍历排除所有，后确认自己
+                    lists.forEach(function(item, index) {
+                        item.classList.remove("current");
+                    })
+                    item.classList.add("current");
+                    // 切换图片 box.style.left=-width*index+"px"
+                    keyIndex = index;
+                    imglist.style.left = -730 * keyIndex + "px";
+                })
+            })
+            // 需求2:  点击左箭头  , 能切换图片
+        arrowLeft.addEventListener("click", function() {
+            // 索引值边界判断
+            if (keyIndex === 0) {
+                // 让索引值编程最后的索引值
+                keyIndex = lists.length - 1;
+            } else {
+                keyIndex--;
+            }
+            console.log(keyIndex); //可以不要
+            // 根据索引值切换序号:用排他思想
+            // 循环遍历排除所有
+            lists.forEach(function(item, index) {
                     item.classList.remove("current");
                 })
-                item.classList.add("current");
-                // 切换图片 box.style.left=-width*index+"px"
-                imglist.style.left = -730 * index + "px"
-            })
+                // 后确认自己
+            lists[keyIndex].classList.add("current")
         })
     </script>
 </body>
