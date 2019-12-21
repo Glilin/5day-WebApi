@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .box {
+            width: 730px;
+            height: 454px;
+            padding: 8px;
+            border: 2px solid skyblue;
+            margin: 20px 20px;
+        }
+        
+        .inner {
+            /* 相对定位：相对定位参考我来定位 */
+            position: relative;
+            /* width: 730px; */
+            height: 454px;
+            overflow: hidden;
+        }
+        /* ul存放图片 */
+        
+        .imglist {
+            position: absolute;
+            width: 400%;
+            /* height: 454px; */
+            left: 0;
+            transition: all .4s;
+        }
+        
+        .imglist li {
+            float: left;
+        }
+        
+        .lmglist img {
+            width: 730px;
+        }
+        /* 切换小圆点 */
+        
+        .list {
+            /* 绝对定位：参照相对定位来定位 4个值：top  right  bottom  left*/
+            position: absolute;
+            /* 设置图片底部的距离 */
+            bottom: 20px;
+            /* 不知道自身宽高的时候用transform 来进行居中 */
+            transform: translateX(-50%);
+            left: 50%;
+        }
+        
+        .list i {
+            width: 20px;
+            height: 20px;
+            background: yellow;
+            float: left;
+            margin-right: 10px;
+            font-size: 13px;
+            font-style: normal;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 50%;
+        }
+        
+        .list .current {
+            color: #fff;
+            background: skyblue;
+        }
+        /* 左右箭头 */
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            margin-top: -30px;
+            width: 100%;
+        }
+        
+        .arrow-left,
+        .arrow-right {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: rgba(44, 46, 46, 0.299);
+            color: #fff;
+            text-align: center;
+            line-height: 60px;
+        }
+        
+        .arrow-right {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!--最外层包个盒子，方便程序运行  -->
+    <div class="box">
+        <div class="inner">
+            <!-- ul存放图片 -->
+            <ul class="imglist" id="imglist">
+                <li>
+                    <a href="#"><img src="./images/2.jpg" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="./images/1.jpg" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="./images/3.jpg" alt=""></a>
+                </li>
+            </ul>
+            <!-- 切换小圆点 -->
+            <div class="list">
+                <i class="current">1</i>
+                <i>2</i>
+                <i>3</i>
+            </div>
+            <!-- 左右箭头 -->
+            <div class="arrow">
+                <span class="arrow-left">&lt;</span>
+                <span class="arrow-right">&gt;</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        //    1 获取元素
+        var lists = document.querySelectorAll(".list i");
+        // 2 注册事件  循环遍历数组，给每个元素注册事件
+        lists.forEach(function(item, index) {
+            item.addEventListener("mousemove", function() {
+                // 按钮切换用排他思想：循环遍历排除所有，后确认自己
+                lists.forEach(function(item, index) {
+                    item.classList.remove("current");
+                })
+                item.classList.add("current");
+                // 切换图片 box.style.left=-width*index+"px"
+                imglist.style.left = -730 * index + "px"
+            })
+        })
+    </script>
+</body>
+
+</html>
