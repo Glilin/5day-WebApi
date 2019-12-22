@@ -137,6 +137,7 @@
         //    1 获取元素
         var lists = document.querySelectorAll(".list i");
         var arrowLeft = document.querySelector(".arrow .arrow-left");
+        var arrowRight = document.querySelector(".arrow .arrow-right");
 
         // 自定义变量存放索引值
         var keyIndex = 0;
@@ -171,6 +172,8 @@
                 })
                 // 后确认自己
             lists[keyIndex].classList.add("current")
+                // 切换图片   box，style.left=-730*index+"px"
+            imglist.style.left = -730 * keyIndex + "px"
         })
     </script>
 </body>
