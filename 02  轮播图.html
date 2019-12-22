@@ -175,6 +175,25 @@
                 // 切换图片   box，style.left=-730*index+"px"
             imglist.style.left = -730 * keyIndex + "px"
         })
+
+        // 需求3 ： 点击右箭头-- 能切换序号 和 能切换图片
+        arrowRight.addEventListener("click", function() {
+            // 索引值边界判断
+            if (keyIndex === 2) {
+                keyIndex = 0
+            } else {
+                keyIndex++;
+            }
+            console.log(keyIndex);
+            // 切换按钮用排他思想
+            // 循环遍历排除所有
+            lists.forEach(function(item, index) {
+                item.classList.remove("current")
+            })
+            lists[keyIndex].classList.add("current");
+            // 切换图片  box.style.left=-730*index+"px"
+            imglist.style.left = -730 * keyIndex + "px"
+        })
     </script>
 </body>
 
