@@ -138,9 +138,12 @@
         var lists = document.querySelectorAll(".list i");
         var arrowLeft = document.querySelector(".arrow .arrow-left");
         var arrowRight = document.querySelector(".arrow .arrow-right");
-
+        var box = document.querySelector(".box");
         // 自定义变量存放索引值
         var keyIndex = 0;
+        // 把轮播图自动播放的时间间隔也定义成变量
+        var intervalTime = 2000;
+
         // 封装 点击左右箭头实现小圆点切换的效果 
         function effect() {
             // 按钮切换：用排他思想
@@ -153,46 +156,8 @@
             // 切换图片 box.style.left=-730*index+"px"
             imglist.style.left = -730 * keyIndex + "px";
         }
-        // 需求1： 能切换圆点  和  能切换图片
-        // 2 注册事件  循环遍历数组，给每个元素注册事件
-        lists.forEach(function(item, index) {
-                item.addEventListener("mousemove", function() {
-                    keyIndex = index;
-                    // 调用封装的函数
-                    effect();
-                    //     // 按钮切换用排他思想：循环遍历排除所有，后确认自己
-                    //     lists.forEach(function(item, index) {
-                    //         item.classList.remove("current");
-                    //     })
-                    //     item.classList.add("current");
-                    //     // 切换图片 box.style.left=-width*index+"px"
 
-                    //     imglist.style.left = -730 * keyIndex + "px";
-                })
-            })
-            // 需求2:  点击左箭头  , 能切换图片
-        arrowLeft.addEventListener("click", function() {
-                // 索引值边界判断
-                if (keyIndex === 0) {
-                    // 让索引值编程最后的索引值
-                    keyIndex = lists.length - 1;
-                } else {
-                    keyIndex--;
-                }
-                console.log(keyIndex); //可以不要
-                //封装好的代码，直接调用，
-                effect();
-                // 切换按钮用排他思想
-                // 循环遍历排除所有
-                // lists.forEach(function (item, index) {
-                //     item.classList.remove("current")
-                // })
-                // lists[keyIndex].classList.add("current");
-                // // 切换图片  box.style.left=-730*index+"px"
-                // imglist.style.left = -730 * keyIndex + "px"
-            })
-            // 需求3 ： 点击右箭头-- 能切换序号 和 能切换图片
-        arrowRight.addEventListener("click", function() {
+        function nextpic() {
             // 索引值边界判断
             if (keyIndex === 2) {
                 keyIndex = 0
@@ -202,14 +167,48 @@
             console.log(keyIndex);
             // 调用封装的代码，其实就对下面的代码进行了封装
             effect();
-            // 切换按钮用排他思想
-            // 循环遍历排除所有
-            // lists.forEach(function (item, index) {
-            //     item.classList.remove("current")
-            // })
-            // lists[keyIndex].classList.add("current");
-            // // 切换图片  box.style.left=-730*index+"px"
-            // imglist.style.left = -730 * keyIndex + "px"
+        }
+        // 需求1： 能切换圆点  和  能切换图片
+        // 2 注册事件  循环遍历数组，给每个元素注册事件
+        lists.forEach(function(item, index) {
+            item.addEventListener("mousemove", function() {
+                keyIndex = index;
+                // 调用封装的函数
+                effect();
+            })
+        })
+
+        // 需求2:  点击左箭头  , 能切换图片
+        arrowLeft.addEventListener("click", function() {
+            // 索引值边界判断
+            if (keyIndex === 0) {
+                // 让索引值编程最后的索引值
+                keyIndex = lists.length - 1;
+            } else {
+                keyIndex--;
+            }
+            console.log(keyIndex); //可以不要
+            //封装好的代码，直接调用，
+            effect();
+        })
+
+        // 需求3 ： 点击右箭头-- 能切换序号 和 能切换图片
+        arrowRight.addEventListener("click", nextpic)
+
+        // 需求4. 自动播放的功能 - 定时执行右箭头触发的事件处理函数即可
+        // 设置多次定时器：语法：  var timer=setInterval(函数,时间间隔)
+        var timer = setInterval(nextpic, intervalTime);
+
+        // 需求5. 鼠标移入停止播放功能
+        box.addEventListener("mouseover", function() {
+            // 清除多次定时器： 语法：clearInterval(定时器名称)
+            clearInterval(timer)
+        })
+
+        // 需求6. 鼠标移出自动播放
+        box.addEventListener("mouseout", function() {
+            // 设置定时器  timer=setInterval(函数，时间间隔)
+            timer = setInterval(nextpic, intervalTime);
         })
     </script>
 </body>
